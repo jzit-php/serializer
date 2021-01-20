@@ -11,6 +11,7 @@ use JzIT\PidApi\Controller\GetController;
 use JzIT\PidApi\Controller\PostController;
 use JzIT\PidApi\Processor\PostProcessor;
 use JzIT\PidApi\Processor\PostProcessorInterface;
+use JzIT\Serializer\Normalizer\DateTimeNormalizer;
 use JzIT\Serializer\Wrapper\Serializer;
 use JzIT\Serializer\Wrapper\SerializerInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -20,6 +21,8 @@ use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\DateIntervalNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeZoneNormalizer;
 use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -59,6 +62,7 @@ class SerializerFactory extends AbstractFactory
             $this->createObjectNormalizer(),
             $this->createJsonSerializableNormalizer(),
             $this->createArrayNormalizer(),
+            new DateTimeNormalizer(),
         ];
     }
 
@@ -92,7 +96,7 @@ class SerializerFactory extends AbstractFactory
             null,
             null,
             null,
-            new PhpDocExtractor()
+                new PhpDocExtractor()
         );
     }
 
